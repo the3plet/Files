@@ -3,10 +3,10 @@
 #define max 25
 void main()
 {
-int frag[max],b[max],f[max],i,j,nb,nf,temp;
+int frag[max],b[max],f[max],i,j,nb,nf,temp,highest=0;
 static int bf[max],ff[max];
 //clrscr();
-printf("\n\tMemory Management Scheme - First Fit");
+printf("\n\tMemory Management Scheme - Worst Fit");
 printf("\nEnter the number of blocks:");
 scanf("%d",&nb);
 printf("Enter the number of files:");
@@ -27,18 +27,20 @@ for(i=1;i<=nf;i++)
 {
 for(j=1;j<=nb;j++)
 {
-if(bf[j]!=1)
+if(bf[j]!=1) //if bf[j] is not allocated
 {
 temp=b[j]-f[i];
 if(temp>=0)
+if(highest<temp)
 {
 ff[i]=j;
-break;
+highest=temp;
 }
 }
 }
-frag[i]=temp;
+frag[i]=highest;
 bf[ff[i]]=1;
+highest=0;
 }
 printf("\nFile_no:\tFile_size :\tBlock_no:\tBlock_size:\tFragement");
 for(i=1;i<=nf;i++)
